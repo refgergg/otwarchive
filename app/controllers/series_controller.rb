@@ -44,8 +44,8 @@ class SeriesController < ApplicationController
   def show
     @works = @series.works_in_order.posted.select(&:visible?).paginate(page: params[:page])
 
-    # sets the page title with the data for the series
-    @page_title = @series.unrevealed? ? ts("Mystery Series") : get_page_title(@series.allfandoms.collect(&:name).join(', '), @series.anonymous? ? ts("Anonymous") : @series.allpseuds.collect(&:byline).join(', '), @series.title)
+    # sets the page subtitle with the data for the series
+    @page_subtitle = @series.unrevealed? ? ts("Mystery Series") : get_page_title(@series.allfandoms.collect(&:name).join(', '), @series.anonymous? ? ts("Anonymous") : @series.allpseuds.collect(&:byline).join(', '), @series.title)
     if current_user.respond_to?(:subscriptions)
       @subscription = current_user.subscriptions.where(subscribable_id: @series.id,
                                                        subscribable_type: 'Series').first ||
